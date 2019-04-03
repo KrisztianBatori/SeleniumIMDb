@@ -23,11 +23,16 @@ public class IMDbDemo {
         return user.equals(driver.findElement(By.cssSelector("#nbusername")).getText());
     }
 
+    public void closeBrowser() {
+        driver.quit();
+    }
+
     public static void main(String[] args) {
         IMDbDemo demo = new IMDbDemo();
         demo.login();
         System.out.println(
                 demo.checkUser(System.getProperty("USER_NAME"))
         );
+        demo.closeBrowser();
     }
 }
