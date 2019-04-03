@@ -17,6 +17,10 @@ public class IMDbTests {
         demo.logout();
         demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
         Assert.assertTrue(demo.checkUser(System.getProperty("USER_NAME")));
+        demo.logout();
+        demo.login("selenium@selenium.com", "12345678");
+        Assert.assertFalse(demo.checkUser(System.getProperty("USER_NAME")));
+        Assert.assertTrue(demo.checkUser("SeleniumTest"));
     }
 
     @After
