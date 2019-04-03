@@ -27,10 +27,6 @@ public class IMDbDemo {
         driver.findElement(By.cssSelector("#nblogout")).click();
     }
 
-    public boolean checkUser(String user) {
-        return user.equals(driver.findElement(By.cssSelector("#nbusername")).getText());
-    }
-
     public void searchResult(String word, int nthResult) {
         int failTreshold = 3;
         int numberOfFails = 0;
@@ -49,6 +45,10 @@ public class IMDbDemo {
                 driver.findElement(By.cssSelector("#navbar-query")).clear();
             }
         }
+    }
+
+    public boolean checkUser(String user) {
+        return user.equals(driver.findElement(By.cssSelector("#nbusername")).getText());
     }
 
     public boolean checkTitleAndRatings(String title, String ratings) {
