@@ -3,6 +3,8 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.util.concurrent.TimeUnit;
+
 public class IMDbDemo {
 
     private WebDriver driver = new ChromeDriver();
@@ -29,6 +31,13 @@ public class IMDbDemo {
         return user.equals(driver.findElement(By.cssSelector("#nbusername")).getText());
     }
 
+    public void searchResult(String word, int nthResult) {
+        ((JavascriptExecutor) driver).executeScript("document.querySelector('#navbar-suggestionsearch').style.display=\"block\"");
+        driver.findElement(By.cssSelector("#navbar-query")).sendKeys(word);
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS) ;
+        driver.findElement(By.cssSelector(String.format("#navbar-suggestionsearch > div:nth-child(%s) > a", nthResult))).click();
+    }
+
     public void closeBrowser() {
         driver.quit();
     }
@@ -36,6 +45,6 @@ public class IMDbDemo {
     public static void main(String[] args) {
         IMDbDemo demo = new IMDbDemo();
         demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
-        demo.logout();
+        demo.searchResult("game", 1);
     }
 }
