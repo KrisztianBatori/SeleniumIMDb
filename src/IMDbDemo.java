@@ -17,11 +17,11 @@ public class IMDbDemo {
     }
 
     public void login(String email, String password) {
-        ((ChromeDriver) driver).findElementByCssSelector("#imdb-signin-link").click();
-        ((ChromeDriver) driver).findElementByCssSelector("#signin-options > div > div:nth-child(2) > a:nth-child(1)").click();
-        ((ChromeDriver) driver).findElementByCssSelector("#ap_email").sendKeys(email);
-        ((ChromeDriver) driver).findElementByCssSelector("#ap_password").sendKeys(password);
-        ((ChromeDriver) driver).findElementByCssSelector("#signInSubmit").click();
+        driver.findElement(By.cssSelector("#imdb-signin-link")).click();
+        driver.findElement(By.cssSelector("#signin-options > div > div:nth-child(2) > a:nth-child(1)")).click();
+        driver.findElement(By.cssSelector("#ap_email")).sendKeys(email);
+        driver.findElement(By.cssSelector("#ap_password")).sendKeys(password);
+        driver.findElement(By.cssSelector("#signInSubmit")).click();
     }
 
     public void logout() {
