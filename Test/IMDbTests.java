@@ -23,6 +23,21 @@ public class IMDbTests {
         Assert.assertTrue(demo.checkUser("SeleniumTest"));
     }
 
+    @Test
+    public void checkIfRightPageFromResultIsShown() {
+        demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
+        for (int i = 0; i < 3; i++) {
+            demo.searchResult("game", 1);
+            Assert.assertTrue(demo.checkTitleAndRatings("Game of Thrones", "9.5"));
+        }
+        demo.searchResult("wal", 1);
+        Assert.assertTrue(demo.checkTitleAndRatings("The Walking Dead", "8.3"));
+        demo.searchResult("game", 2);
+        Assert.assertFalse(demo.checkTitleAndRatings("Game of Thrones", "9.5"));
+        demo.searchResult("wal", 3);
+        Assert.assertFalse(demo.checkTitleAndRatings("The Walking Dead", "8.3"));
+    }
+
     @After
     public void closeBrowser() {
         System.out.println("CLOSE BROWSER");
