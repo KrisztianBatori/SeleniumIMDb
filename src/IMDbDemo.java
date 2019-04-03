@@ -19,6 +19,10 @@ public class IMDbDemo {
         ((ChromeDriver) driver).findElementByCssSelector("#signInSubmit").click();
     }
 
+    public void logout() {
+        driver.findElement(By.cssSelector("#nblogout")).click();
+    }
+
     public boolean checkUser(String user) {
         return user.equals(driver.findElement(By.cssSelector("#nbusername")).getText());
     }
