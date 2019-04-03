@@ -1,3 +1,4 @@
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -18,9 +19,15 @@ public class IMDbDemo {
         ((ChromeDriver) driver).findElementByCssSelector("#signInSubmit").click();
     }
 
+    public boolean checkUser(String user) {
+        return user.equals(driver.findElement(By.cssSelector("#nbusername")).getText());
+    }
 
     public static void main(String[] args) {
         IMDbDemo demo = new IMDbDemo();
         demo.login();
+        System.out.println(
+                demo.checkUser(System.getProperty("USER_NAME"))
+        );
     }
 }
