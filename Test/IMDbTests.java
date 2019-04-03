@@ -2,19 +2,18 @@ import org.junit.*;
 
 public class IMDbTests {
 
-    private IMDbDemo demo = new IMDbDemo(); // Open a chrome browser.
+    private IMDbDemo demo;
 
     @Before
-    public void login() {
-        System.out.println("LOG INTO THE IMDB ACCOUNT");
-        demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
+    public void openBrowser() {
+        System.out.println("OPEN BROWSER");
+        demo = new IMDbDemo();
     }
 
     @Test
     public void checkIfRightUserHasLogged() {
-        System.out.println("CHECK IF THE RIGHT USER HAS LOGGED");
+        demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
         Assert.assertTrue(demo.checkUser(System.getProperty("USER_NAME")));
-        System.out.println("THE RIGHT USER HAS LOGGED");
     }
 
     @After
