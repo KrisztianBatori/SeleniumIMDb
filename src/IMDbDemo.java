@@ -1,6 +1,11 @@
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+
+import java.nio.file.Path;
 
 public class IMDbDemo {
 
@@ -20,6 +25,7 @@ public class IMDbDemo {
     }
 
     public void logout() {
+        ((JavascriptExecutor) driver).executeScript("document.querySelector('#navUserMenu > div').style.display=\"block\"");
         driver.findElement(By.cssSelector("#nblogout")).click();
     }
 
@@ -29,5 +35,11 @@ public class IMDbDemo {
 
     public void closeBrowser() {
         driver.quit();
+    }
+
+    public static void main(String[] args) {
+        IMDbDemo demo = new IMDbDemo();
+        demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
+        demo.logout();
     }
 }
