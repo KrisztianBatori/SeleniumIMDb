@@ -7,7 +7,7 @@ public class IMDbTests {
     @Before
     public void login() {
         System.out.println("LOG INTO THE IMDB ACCOUNT");
-        demo.login();
+        demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
     }
 
     @Test
