@@ -47,6 +47,17 @@ public class IMDbDemo {
         }
     }
 
+    public void addMovieToWatchlist(String method) {
+        if (method.equals("click button")) {
+            driver.findElement(By.cssSelector("#title-overview-widget > div.vital > div.title_block > div > " +
+                    "div.titleBar > div.primary_ribbon > div.ribbonize > div")).click();
+        }
+        else if (method.equals("click text")) {
+            driver.findElement(By.cssSelector("#title-overview-widget > div.plot_summary_wrapper > " +
+                    "div.wlb-title-main-details > span > div")).click();
+        }
+    }
+
     public boolean checkUser(String user) {
         return user.equals(driver.findElement(By.cssSelector("#nbusername")).getText());
     }
@@ -70,8 +81,6 @@ public class IMDbDemo {
         IMDbDemo demo = new IMDbDemo();
         demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
         demo.searchResult("game", 1);
-        System.out.println(
-                demo.checkTitleAndRatings("Game of Thrones", "9.5")
-        );
+        demo.addMovieToWatchlist("click button");
     }
 }
