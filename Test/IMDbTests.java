@@ -14,6 +14,9 @@ public class IMDbTests {
     public void checkIfRightUserHasLogged() {
         demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
         Assert.assertTrue(demo.checkUser(System.getProperty("USER_NAME")));
+        demo.logout();
+        demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
+        Assert.assertTrue(demo.checkUser(System.getProperty("USER_NAME")));
     }
 
     @After
