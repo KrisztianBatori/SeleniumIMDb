@@ -73,6 +73,24 @@ public class IMDbDemo {
                 ).getText().equals(ratings);
     }
 
+    public boolean checkIfHasMovieOnWatchlist(String movie) {
+        ((JavascriptExecutor) driver).executeScript("document.querySelector('#navUserMenu > div').style.display=\"block\"");
+        driver.findElement(By.cssSelector("#navUserMenu > div > div:nth-child(2) > ul > li:nth-child(2) > a")).click();
+        driver.findElement(By.cssSelector("#main > div > div > a:nth-child(3)")).click();
+        if (driver.findElement(By.cssSelector("#center-1-react > div > div.lister-controls > div.nav > " +
+                "div.nav-left > div > span:nth-child(1)")).getText().charAt(0) == '0') {
+            return false;
+        }
+        else {
+            return driver
+                    .findElement(By.cssSelector("#center-1-react > div > div:nth-child(3)"))
+                    .findElements(By.tagName("h3"))
+                    .stream()
+                    .filter(webElement -> webElement.getText().equals(movie))
+                    .count() >= 1;
+        }
+    }
+
     public void closeBrowser() {
         driver.quit();
     }
@@ -80,7 +98,8 @@ public class IMDbDemo {
     public static void main(String[] args) {
         IMDbDemo demo = new IMDbDemo();
         demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
-        demo.searchResult("game", 1);
-        demo.addMovieToWatchlist("click button");
+        System.out.println(
+                demo.checkIfHasMovieOnWatchlist("Game of Thrones")
+        );
     }
 }
