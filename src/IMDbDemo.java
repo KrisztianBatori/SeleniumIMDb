@@ -1,8 +1,6 @@
-import jdk.jfr.Timespan;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import java.util.concurrent.TimeUnit;
 
@@ -10,6 +8,10 @@ public class IMDbDemo {
 
     private WebDriver driver = new ChromeDriver();
     private String mainPage = "https://www.imdb.com";
+
+    public WebDriver getDriver() {
+        return driver;
+    }
 
     IMDbDemo() {
         driver.get(mainPage);
@@ -53,7 +55,7 @@ public class IMDbDemo {
     }
 
     public void removeMovieFromWatchlistByName(String movie) {
-        if (checkIfHasMovieOnWatchlist(movie)) {
+        if (IMDbDemoChecks.checkIfHasMovieOnWatchlist(driver, movie)) {
 
             driver
                     .findElement(By.cssSelector("#center-1-react > div > div:nth-child(3)"))
@@ -95,41 +97,6 @@ public class IMDbDemo {
                 );
     }
 
-    public boolean checkUser(String user) {
-        return user.equals(driver.findElement(By.cssSelector("#nbusername")).getText());
-    }
-
-    public boolean checkTitleAndRatings(String title, String ratings) {
-        return driver.findElement(
-                By.cssSelector("#title-overview-widget > div.vital > div.title_block > div > div.titleBar > " +
-                        "div.title_wrapper > h1")
-                ).getText().contains(title) &&
-                driver.findElement(
-                        By.cssSelector("#title-overview-widget > div.vital > div.title_block > div > " +
-                                "div.ratings_wrapper > div.imdbRating > div.ratingValue > strong > span")
-                ).getText().equals(ratings);
-    }
-
-    public boolean checkIfHasMovieOnWatchlist(String movie) {
-        if (driver.findElement(By.cssSelector("#center-1-react > div > div.lister-controls > div.nav > " +
-                "div.nav-left > div > span:nth-child(1)")).getText().charAt(0) == '0') {
-            return false;
-        }
-        else {
-            return driver
-                    .findElement(By.cssSelector("#center-1-react > div > div:nth-child(3)"))
-                    .findElements(By.tagName("h3"))
-                    .stream()
-                    .filter(webElement -> webElement.getText().equals(movie))
-                    .count() >= 1;
-        }
-    }
-
-    public int getWatchlistSize() {
-        return driver.findElement(By.cssSelector("#center-1-react > div > div.lister-controls > div.nav > " +
-                "div.nav-left > div > span:nth-child(1)")).getText().charAt(0) - 48;
-    }
-
     public void refreshPage() {
         driver.navigate().refresh();
     }
@@ -141,9 +108,5 @@ public class IMDbDemo {
     public static void main(String[] args) {
         IMDbDemo demo = new IMDbDemo();
         demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
-        demo.goToWatchlist();
-        System.out.println(
-                demo.getWatchlistSize()
-        );
     }
 }
