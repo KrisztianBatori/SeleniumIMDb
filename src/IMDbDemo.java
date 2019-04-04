@@ -130,6 +130,10 @@ public class IMDbDemo {
                 "div.nav-left > div > span:nth-child(1)")).getText().charAt(0) - 48;
     }
 
+    public void refreshPage() {
+        driver.navigate().refresh();
+    }
+
     public void closeBrowser() {
         driver.quit();
     }
