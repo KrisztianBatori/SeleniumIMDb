@@ -2,6 +2,7 @@ import jdk.jfr.Timespan;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import java.util.concurrent.TimeUnit;
 
@@ -51,6 +52,24 @@ public class IMDbDemo {
         driver.findElement(By.cssSelector("#main > div > div > a:nth-child(3)")).click();
     }
 
+    public void removeMovieFromWatchlistByName(String movie) {
+        if (checkIfHasMovieOnWatchlist(movie)) {
+
+            driver
+                    .findElement(By.cssSelector("#center-1-react > div > div:nth-child(3)"))
+                    .findElements(By.tagName("img"))
+                    .stream()
+                    .filter(webElement -> webElement.getAttribute("alt").equals(movie))
+                    .findFirst()
+                    .get()
+                    .findElement(By.xpath("./.."))
+                    .findElement(By.xpath("./.."))
+                    .findElement(By.tagName("div"))
+                    .click();
+
+        }
+    }
+
     public boolean checkUser(String user) {
         return user.equals(driver.findElement(By.cssSelector("#nbusername")).getText());
     }
@@ -88,8 +107,14 @@ public class IMDbDemo {
     public static void main(String[] args) {
         IMDbDemo demo = new IMDbDemo();
         demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
-        System.out.println(
-                demo.checkIfHasMovieOnWatchlist("Game of Thrones")
-        );
+        demo.goToWatchlist();
+        demo.removeMovieFromWatchlistByName("The Walking Dead");
+        demo.searchResult("wal", 1);
+        demo.addMovieToWatchlist("click button");
+        demo.goToWatchlist();
+        demo.removeMovieFromWatchlistByName("Game of Thrones");
+        demo.searchResult("game", 1);
+        demo.addMovieToWatchlist("click text");
+        demo.goToWatchlist();
     }
 }
