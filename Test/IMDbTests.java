@@ -41,16 +41,20 @@ public class IMDbTests {
     @Test
     public void checkIfMovieAddedToWatchlist() {
         demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
+        demo.goToWatchlist();
         Assert.assertFalse(demo.checkIfHasMovieOnWatchlist(""));
         Assert.assertFalse(demo.checkIfHasMovieOnWatchlist("The Walking Dead"));
         demo.searchResult("game", 1);
         demo.addMovieToWatchlist("click button");
+        demo.goToWatchlist();
         Assert.assertTrue(demo.checkIfHasMovieOnWatchlist("Game of Thrones"));
         demo.searchResult("wal", 1);
         demo.addMovieToWatchlist("click text");
+        demo.goToWatchlist();
         Assert.assertTrue(demo.checkIfHasMovieOnWatchlist("The Walking Dead"));
         demo.logout();
         demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
+        demo.goToWatchlist();
         Assert.assertTrue(demo.checkIfHasMovieOnWatchlist("The Walking Dead"));
         Assert.assertTrue(demo.checkIfHasMovieOnWatchlist("Game of Thrones"));
     }
