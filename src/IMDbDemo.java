@@ -125,6 +125,11 @@ public class IMDbDemo {
         }
     }
 
+    public int getWatchlistSize() {
+        return driver.findElement(By.cssSelector("#center-1-react > div > div.lister-controls > div.nav > " +
+                "div.nav-left > div > span:nth-child(1)")).getText().charAt(0) - 48;
+    }
+
     public void closeBrowser() {
         driver.quit();
     }
@@ -133,6 +138,8 @@ public class IMDbDemo {
         IMDbDemo demo = new IMDbDemo();
         demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
         demo.goToWatchlist();
-        demo.clearWatchlist();
+        System.out.println(
+                demo.getWatchlistSize()
+        );
     }
 }
