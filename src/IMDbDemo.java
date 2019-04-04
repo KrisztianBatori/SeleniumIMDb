@@ -45,6 +45,12 @@ public class IMDbDemo {
         }
     }
 
+    public void goToWatchlist() {
+        ((JavascriptExecutor) driver).executeScript("document.querySelector('#navUserMenu > div').style.display=\"block\"");
+        driver.findElement(By.cssSelector("#navUserMenu > div > div:nth-child(2) > ul > li:nth-child(2) > a")).click();
+        driver.findElement(By.cssSelector("#main > div > div > a:nth-child(3)")).click();
+    }
+
     public boolean checkUser(String user) {
         return user.equals(driver.findElement(By.cssSelector("#nbusername")).getText());
     }
@@ -61,9 +67,6 @@ public class IMDbDemo {
     }
 
     public boolean checkIfHasMovieOnWatchlist(String movie) {
-        ((JavascriptExecutor) driver).executeScript("document.querySelector('#navUserMenu > div').style.display=\"block\"");
-        driver.findElement(By.cssSelector("#navUserMenu > div > div:nth-child(2) > ul > li:nth-child(2) > a")).click();
-        driver.findElement(By.cssSelector("#main > div > div > a:nth-child(3)")).click();
         if (driver.findElement(By.cssSelector("#center-1-react > div > div.lister-controls > div.nav > " +
                 "div.nav-left > div > span:nth-child(1)")).getText().charAt(0) == '0') {
             return false;
