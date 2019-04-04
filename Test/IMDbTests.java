@@ -57,6 +57,37 @@ public class IMDbTests {
         demo.goToWatchlist();
         Assert.assertTrue(demo.checkIfHasMovieOnWatchlist("The Walking Dead"));
         Assert.assertTrue(demo.checkIfHasMovieOnWatchlist("Game of Thrones"));
+        demo.clearWatchlist();
+    }
+
+    @Test
+    public void editWatchlistProperly() {
+        demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
+        demo.searchResult("matrix", 1);
+        demo.addMovieToWatchlist("click button");
+        demo.searchResult("world", 2);
+        demo.addMovieToWatchlist("click text");
+        demo.searchResult("throne", 3);
+        demo.addMovieToWatchlist("click button");
+        demo.searchResult("wal", 1);
+        demo.addMovieToWatchlist("click text");
+        demo.goToWatchlist();
+        Assert.assertEquals(4, demo.getWatchlistSize());
+        demo.removeMovieFromWatchlistByNumber(3);
+        demo.refreshPage();
+        Assert.assertEquals(3, demo.getWatchlistSize());
+        demo.removeMovieFromWatchlistByName("The Walking Dead");
+        demo.refreshPage();
+        Assert.assertFalse(demo.checkIfHasMovieOnWatchlist("The Walking Dead"));
+        demo.clearWatchlist();
+        demo.refreshPage();
+        Assert.assertEquals(0, demo.getWatchlistSize());
+        demo.searchResult("wal", 1);
+        demo.addMovieToWatchlist("click text");
+        demo.goToWatchlist();
+        demo.removeMovieFromWatchlistByNumber(1);
+        demo.refreshPage();
+        Assert.assertEquals(0, demo.getWatchlistSize());
     }
 
     @After
