@@ -28,23 +28,10 @@ public class IMDbDemo {
     }
 
     public void searchResult(String word, int nthResult) {
-        int failTreshold = 3;
-        int numberOfFails = 0;
-        while (true) {
-            try {
-                ((JavascriptExecutor) driver).executeScript(String.format("document.getElementById(\"navbar-query\").value = \"%s\"", word));
-                driver.findElement(By.cssSelector("#navbar-query")).click();
-                driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-                driver.findElement(By.cssSelector(String.format("#navbar-suggestionsearch > div:nth-child(%s) > a", nthResult))).click();
-                break;
-            } catch (org.openqa.selenium.StaleElementReferenceException e) {
-                numberOfFails += 1;
-                if (numberOfFails == failTreshold) {
-                    throw new ArithmeticException("Reached fail treshold in 'searchResult' method.");
-                }
-                driver.findElement(By.cssSelector("#navbar-query")).clear();
-            }
-        }
+        ((JavascriptExecutor) driver).executeScript(String.format("document.getElementById(\"navbar-query\").value = \"%s\"", word));
+        driver.findElement(By.cssSelector("#navbar-query")).click();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.findElement(By.cssSelector(String.format("#navbar-suggestionsearch > div:nth-child(%s) > a", nthResult))).click();
     }
 
     public void addMovieToWatchlist(String method) {
