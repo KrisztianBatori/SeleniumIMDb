@@ -70,6 +70,18 @@ public class IMDbDemo {
         }
     }
 
+    public void removeMovieFromWatchlistByNumber(int number) {
+        number -= 1;
+        driver
+                .findElement(By.cssSelector("#center-1-react > div > div:nth-child(3)"))
+                .findElements(By.tagName("img"))
+                .get(number)
+                .findElement(By.xpath("./.."))
+                .findElement(By.xpath("./.."))
+                .findElement(By.tagName("div"))
+                .click();
+    }
+
     public boolean checkUser(String user) {
         return user.equals(driver.findElement(By.cssSelector("#nbusername")).getText());
     }
@@ -112,7 +124,7 @@ public class IMDbDemo {
         demo.searchResult("wal", 1);
         demo.addMovieToWatchlist("click button");
         demo.goToWatchlist();
-        demo.removeMovieFromWatchlistByName("Game of Thrones");
+        demo.removeMovieFromWatchlistByNumber(1);
         demo.searchResult("game", 1);
         demo.addMovieToWatchlist("click text");
         demo.goToWatchlist();
