@@ -108,5 +108,7 @@ public class IMDbDemo {
     public static void main(String[] args) {
         IMDbDemo demo = new IMDbDemo();
         demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
+        demo.goToWatchlist();
+        IMDbDemoChecks.getAllWatchlistMovie(demo.getDriver()).forEach(System.out::println);
     }
 }

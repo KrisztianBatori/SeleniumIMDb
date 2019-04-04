@@ -1,5 +1,9 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class IMDbDemoChecks {
     public static int getWatchlistSize(WebDriver driver) {
@@ -35,6 +39,15 @@ public class IMDbDemoChecks {
 
     public static boolean checkUser(WebDriver driver, String user) {
         return user.equals(driver.findElement(By.cssSelector("#nbusername")).getText());
+    }
+
+    public static List<String> getAllWatchlistMovie(WebDriver driver) {
+        return driver
+                .findElement(By.cssSelector("#center-1-react > div > div:nth-child(3)"))
+                .findElements(By.tagName("img"))
+                .stream()
+                .map(webElement -> webElement.getAttribute("alt"))
+                .collect(Collectors.toList());
     }
 
 }
