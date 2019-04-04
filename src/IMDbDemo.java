@@ -82,6 +82,19 @@ public class IMDbDemo {
                 .click();
     }
 
+    public void clearWatchlist() {
+        driver
+                .findElement(By.cssSelector("#center-1-react > div > div:nth-child(3)"))
+                .findElements(By.tagName("img"))
+                .forEach(webElement -> {
+                            webElement.findElement(By.xpath("./.."))
+                                .findElement(By.xpath("./.."))
+                                .findElement(By.tagName("div"))
+                                .click();
+                            }
+                );
+    }
+
     public boolean checkUser(String user) {
         return user.equals(driver.findElement(By.cssSelector("#nbusername")).getText());
     }
@@ -120,13 +133,6 @@ public class IMDbDemo {
         IMDbDemo demo = new IMDbDemo();
         demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
         demo.goToWatchlist();
-        demo.removeMovieFromWatchlistByName("The Walking Dead");
-        demo.searchResult("wal", 1);
-        demo.addMovieToWatchlist("click button");
-        demo.goToWatchlist();
-        demo.removeMovieFromWatchlistByNumber(1);
-        demo.searchResult("game", 1);
-        demo.addMovieToWatchlist("click text");
-        demo.goToWatchlist();
+        demo.clearWatchlist();
     }
 }
