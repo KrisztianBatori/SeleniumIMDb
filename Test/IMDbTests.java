@@ -38,6 +38,23 @@ public class IMDbTests {
         Assert.assertFalse(demo.checkTitleAndRatings("The Walking Dead", "8.3"));
     }
 
+    @Test
+    public void checkIfMovieAddedToWatchlist() {
+        demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
+        Assert.assertFalse(demo.checkIfHasMovieOnWatchlist(""));
+        Assert.assertFalse(demo.checkIfHasMovieOnWatchlist("The Walking Dead"));
+        demo.searchResult("game", 1);
+        demo.addMovieToWatchlist("click button");
+        Assert.assertTrue(demo.checkIfHasMovieOnWatchlist("Game of Thrones"));
+        demo.searchResult("wal", 1);
+        demo.addMovieToWatchlist("click text");
+        Assert.assertTrue(demo.checkIfHasMovieOnWatchlist("The Walking Dead"));
+        demo.logout();
+        demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
+        Assert.assertTrue(demo.checkIfHasMovieOnWatchlist("The Walking Dead"));
+        Assert.assertTrue(demo.checkIfHasMovieOnWatchlist("Game of Thrones"));
+    }
+
     @After
     public void closeBrowser() {
         System.out.println("CLOSE BROWSER");
