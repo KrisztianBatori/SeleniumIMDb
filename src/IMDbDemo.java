@@ -1,7 +1,13 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.util.concurrent.TimeUnit;
 
 public class IMDbDemo {
@@ -105,10 +111,24 @@ public class IMDbDemo {
         driver.quit();
     }
 
+    public void orderWatchlistByOption(String option) {
+        WebElement sortSelector = driver.findElement(By.cssSelector("#lister-sort-by-options"));
+        new Select(sortSelector).selectByVisibleText(option);
+        (new WebDriverWait(driver, 10))
+                .until(ExpectedConditions.attributeContains(driver.findElement(By.cssSelector("#center-1-react > div > div.lister-controls > " +
+                        "div:nth-child(3)")), "class", "working"));
+        (new WebDriverWait(driver, 10))
+                .until(ExpectedConditions.not(
+                        ExpectedConditions.attributeContains(driver.findElement(By.cssSelector("#center-1-react > div > div.lister-controls > " +
+                                "div:nth-child(3)")), "class", "working"))
+                );
+    }
+
     public static void main(String[] args) {
         IMDbDemo demo = new IMDbDemo();
         demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
         demo.goToWatchlist();
+        demo.orderWatchlistByOption("IMDb Rating");
         IMDbDemoChecks.getAllWatchlistMovie(demo.getDriver()).forEach(System.out::println);
     }
 }
