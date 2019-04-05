@@ -50,4 +50,13 @@ public class IMDbDemoChecks {
                 .collect(Collectors.toList());
     }
 
+    public static List<String> getAllRecentMovie(WebDriver driver) {
+        return driver
+                .findElement(By.cssSelector("#rvi-div > div > div.items"))
+                .findElements(By.xpath(".//*[@id!=\"\"]"))
+                .stream()
+                .map(webElement -> webElement.findElement(By.tagName("img")).getAttribute("alt"))
+                .collect(Collectors.toList());
+    }
+
 }

@@ -136,5 +136,15 @@ public class IMDbDemo {
     public static void main(String[] args) {
         IMDbDemo demo = new IMDbDemo();
         demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
+        demo.searchResult("wal", 1);
+        demo.searchResult("game", 1);
+        demo.goToUserRatings();
+        System.out.println(
+                IMDbDemoChecks.getAllRecentMovie(demo.getDriver())
+        );
+        demo.goToWatchlist();
+        System.out.println(
+                IMDbDemoChecks.getAllRecentMovie(demo.getDriver())
+        );
     }
 }
