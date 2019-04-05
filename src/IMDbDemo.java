@@ -133,6 +133,10 @@ public class IMDbDemo {
                 );
     }
 
+    public void clearHistory() {
+        driver.findElement(By.linkText("Clear your history")).click();
+    }
+
     public static void main(String[] args) {
         IMDbDemo demo = new IMDbDemo();
         demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
@@ -146,5 +150,8 @@ public class IMDbDemo {
         System.out.println(
                 IMDbDemoChecks.getAllRecentMovie(demo.getDriver())
         );
+        demo.searchResult("matrix", 1);
+        demo.clearHistory();
+        demo.refreshPage();
     }
 }
