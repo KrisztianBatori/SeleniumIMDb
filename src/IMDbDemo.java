@@ -59,6 +59,16 @@ public class IMDbDemo {
         driver.findElement(By.cssSelector("#main > div > div > a:nth-child(3)")).click();
     }
 
+    public void goToUserActivity() {
+        ((JavascriptExecutor) driver).executeScript("document.querySelector('#navUserMenu > div').style.display=\"block\"");
+        driver.findElement(By.cssSelector("#navUserMenu > div > div:nth-child(2) > ul > li:nth-child(1) > a")).click();
+    }
+
+    public void goToUserRatings() {
+        ((JavascriptExecutor) driver).executeScript("document.querySelector('#navUserMenu > div').style.display=\"block\"");
+        driver.findElement(By.cssSelector("#navUserMenu > div > div:nth-child(2) > ul > li:nth-child(3) > a")).click();
+    }
+
     public void removeMovieFromWatchlistByName(String movie) {
         if (IMDbDemoChecks.checkIfHasMovieOnWatchlist(driver, movie)) {
 
@@ -126,8 +136,5 @@ public class IMDbDemo {
     public static void main(String[] args) {
         IMDbDemo demo = new IMDbDemo();
         demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
-        demo.goToWatchlist();
-        demo.orderWatchlistByOption("IMDb Rating");
-        IMDbDemoChecks.getAllWatchlistMovie(demo.getDriver()).forEach(System.out::println);
     }
 }
