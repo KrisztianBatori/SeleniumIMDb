@@ -26,6 +26,33 @@ public class IMDbTests {
     }
 
     @Test
+    public void checkIfRecentMoviesIsTrackedProperly() {
+        demo.goToUserRatings();
+        Assert.assertEquals(
+                new ArrayList<>() {{}}, IMDbDemoChecks.getAllRecentMovie(demo.getDriver())
+        );
+        demo.searchResult("wal", 1);
+        demo.searchResult("hunger", 1);
+        demo.goToWatchlist();
+        Assert.assertEquals(
+                2, IMDbDemoChecks.getAllRecentMovie(demo.getDriver()).size()
+        );
+        demo.clearHistory();
+        demo.refreshPage();
+        Assert.assertEquals(
+                0, IMDbDemoChecks.getAllRecentMovie(demo.getDriver()).size()
+        );
+        demo.searchResult("game", 3);
+        demo.searchResult("matrix", 2);
+        demo.logout();
+        demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
+        demo.goToUserRatings();
+        Assert.assertEquals(
+                1, IMDbDemoChecks.getAllRecentMovie(demo.getDriver()).size()
+        );
+    }
+
+    @Test
     public void checkIfWatchlistOrderedProperly() {
         demo.searchResult("wal", 1);
         demo.addMovieToWatchlist("click text");
