@@ -10,11 +10,11 @@ public class IMDbTests {
     public void openBrowser() {
         System.out.println("OPEN BROWSER");
         demo = new IMDbDemo();
+        demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
     }
 
     @Test
     public void checkIfRightUserHasLogged() {
-        demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
         Assert.assertTrue(IMDbDemoChecks.checkUser(demo.getDriver(), System.getProperty("USER_NAME")));
         demo.logout();
         demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
@@ -27,7 +27,6 @@ public class IMDbTests {
 
     @Test
     public void checkIfWatchlistOrderedProperly() {
-        demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
         demo.searchResult("wal", 1);
         demo.addMovieToWatchlist("click text");
         demo.searchResult("game", 1);
@@ -140,7 +139,6 @@ public class IMDbTests {
 
     @Test
     public void checkIfRightPageFromResultIsShown() {
-        demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
         for (int i = 0; i < 3; i++) {
             demo.searchResult("game", 1);
             Assert.assertTrue(IMDbDemoChecks.checkTitleAndRatings(demo.getDriver(), "Game of Thrones", "9.5"));
@@ -155,7 +153,6 @@ public class IMDbTests {
 
     @Test
     public void checkIfMovieAddedToWatchlist() {
-        demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
         demo.goToWatchlist();
         Assert.assertFalse(IMDbDemoChecks.checkIfHasMovieOnWatchlist(demo.getDriver(), ""));
         Assert.assertFalse(IMDbDemoChecks.checkIfHasMovieOnWatchlist(demo.getDriver(), "The Walking Dead"));
@@ -172,12 +169,17 @@ public class IMDbTests {
         demo.goToWatchlist();
         Assert.assertTrue(IMDbDemoChecks.checkIfHasMovieOnWatchlist(demo.getDriver(), "The Walking Dead"));
         Assert.assertTrue(IMDbDemoChecks.checkIfHasMovieOnWatchlist(demo.getDriver(), "Game of Thrones"));
-        demo.clearWatchlist();
+        for (int i = 0; i < 2; i++) {
+            demo.clearWatchlist();
+            demo.refreshPage();
+        }
+        Assert.assertEquals(
+                new ArrayList<>() {{}}, IMDbDemoChecks.getAllWatchlistMovie(demo.getDriver())
+        );
     }
 
     @Test
     public void editWatchlistProperly() {
-        demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
         demo.searchResult("matrix", 1);
         demo.addMovieToWatchlist("click button");
         demo.searchResult("world", 2);
