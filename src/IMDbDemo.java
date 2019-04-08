@@ -148,11 +148,18 @@ public class IMDbDemo {
         driver.findElement(By.xpath("//*[@id=\"delete_items_form\"]/div/input")).click();
     }
 
+    public void rateMovie(String movie, int star) {
+        searchResult(movie, 1);
+        driver.findElement(By.xpath("//*[@id=\"star-rating-widget\"]/div/button/span[1]")).click();
+        driver.findElement(By.xpath(String.format("//*[@id=\"star-rating-widget\"]/div/div/span[1]/span/a[%s]", star))).click();
+    }
+
     public static void main(String[] args) {
         IMDbDemo demo = new IMDbDemo();
         demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
-        demo.goToWatchlist();
-        demo.getDriver().findElement(By.xpath("//*[@id=\"center-1-react\"]/div/div[1]/div/div[1]/a")).click();
-        demo.deleteMovieFromWatchlist(2);
+        //demo.goToWatchlist();
+        //demo.getDriver().findElement(By.xpath("//*[@id=\"center-1-react\"]/div/div[1]/div/div[1]/a")).click();
+        //demo.deleteMovieFromWatchlist(2);
+        demo.rateMovie("Game of Thrones", 1);
     }
 }
