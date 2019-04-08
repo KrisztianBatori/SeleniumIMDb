@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class IMDbDemo {
@@ -137,21 +138,21 @@ public class IMDbDemo {
         driver.findElement(By.linkText("Clear your history")).click();
     }
 
+    public static void deleteMovieFromWatchlist(WebDriver driver, int index) {
+        index -= 1;
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();",
+                driver.findElements(By.className("lister-item"))
+                        .get(index)
+                        .findElement(By.tagName("input")));
+        driver.findElement(By.xpath("//*[@id=\"delete_items\"]")).click();
+        driver.findElement(By.xpath("//*[@id=\"delete_items_form\"]/div/input")).click();
+    }
+
     public static void main(String[] args) {
         IMDbDemo demo = new IMDbDemo();
         demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
-        demo.searchResult("wal", 1);
-        demo.searchResult("game", 1);
-        demo.goToUserRatings();
-        System.out.println(
-                IMDbDemoChecks.getAllRecentMovie(demo.getDriver())
-        );
         demo.goToWatchlist();
-        System.out.println(
-                IMDbDemoChecks.getAllRecentMovie(demo.getDriver())
-        );
-        demo.searchResult("matrix", 1);
-        demo.clearHistory();
-        demo.refreshPage();
+        demo.getDriver().findElement(By.xpath("//*[@id=\"center-1-react\"]/div/div[1]/div/div[1]/a")).click();
+        deleteMovieFromWatchlist(demo.getDriver(), 2);
     }
 }
