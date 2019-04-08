@@ -138,7 +138,7 @@ public class IMDbDemo {
         driver.findElement(By.linkText("Clear your history")).click();
     }
 
-    public static void deleteMovieFromWatchlist(WebDriver driver, int index) {
+    public void deleteMovieFromWatchlist(int index) {
         index -= 1;
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();",
                 driver.findElements(By.className("lister-item"))
@@ -153,6 +153,6 @@ public class IMDbDemo {
         demo.login(System.getProperty("USER_EMAIL"), System.getProperty("USER_PASSWORD"));
         demo.goToWatchlist();
         demo.getDriver().findElement(By.xpath("//*[@id=\"center-1-react\"]/div/div[1]/div/div[1]/a")).click();
-        deleteMovieFromWatchlist(demo.getDriver(), 2);
+        demo.deleteMovieFromWatchlist(2);
     }
 }
